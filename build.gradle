@@ -1,0 +1,63 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.0.BUILD-SNAPSHOT'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application' 
+ 
+
+jar {
+	baseName = 'LogMonitor-Batch'
+	version = '0.0.1'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'LogMonitoring Batch Wrapper Jar',  
+        	'Implementation-Version': '1.0.0',
+        	'Main-Class': 'com.logMonitoring.InitiateMonitoring'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile 'ch.qos.logback:logback-classic:1.1.3'
+	compile 'net.java.dev.jna:jna-platform:4.2.1'
+	compile 'javax.mail:mail:1.4.1'
+	compile 'org.fusesource:sigar:1.6.4'
+	compile 'org.yaml:snakeyaml:1.16'
+}
+
+
+eclipse {
+	classpath {
+		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	}
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.10'
+}

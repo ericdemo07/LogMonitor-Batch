@@ -1,0 +1,13 @@
+directory.path: /home/ericdemo07/Ubuntu_Space
+directory.name: NIOTest
+directory.filename: a.txt
+mail.to: ayush.shukla@x.com
+mail.from: doom@x.com 
+mail.port: 1025
+mail.host: localhost
+mail.warn.subject: Bing server down
+mail.warn.body: check
+mail.success.subject: Bing server is up and running
+mail.success.body: check
+error.keyword: WARN
+success.keyword: SUCCESS
